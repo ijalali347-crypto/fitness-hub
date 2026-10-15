@@ -1,0 +1,11 @@
+import {cp,mkdir,readFile,readdir,rm,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const html=await readFile(path.join(root,'dist/index.html'),'utf8');
+if(!html.includes('/fitness-hub/_expo/'))throw new Error('Unexpected web base path. Build first with the fitness-hub base path.');
+await rm(path.join(root,'_expo'),{recursive:true,force:true});
+await cp(path.join(root,'dist/_expo'),path.join(root,'_expo'),{recursive:true});
+await writeFile(path.join(root,'index.html'),html);
+await writeFile(path.join(root,'.nojekyll'),'');
+console.log('GitHub Pages entry point prepared at repository root.');

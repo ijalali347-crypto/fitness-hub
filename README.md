@@ -2,6 +2,10 @@
 
 A free, seven-language fitness app built with Expo and React Native for Android, iOS and the web. Original dark green design, home and gym routines, guided sets, rest timers, local profiles, weight tracking, activity history and portable JSON backups.
 
+## Browser preview
+
+Open [Fitness Hub](https://ijalali347-crypto.github.io/fitness-hub/) to use the browser version. The repository root includes the generated web entry point and bundle for existing GitHub Pages hosting. Run `npm run build:pages` after source changes, then commit the updated `index.html`, `_expo/` and `.nojekyll` along with source. The native Android/iOS source remains in this repository.
+
 ## Run locally
 
 Requires Node.js 20.19+ and npm.
@@ -19,7 +23,7 @@ npm run build:web
 npx expo export --platform android --platform ios
 ```
 
-`app.json` sets `/fitness-hub` as the web base path. Serve the web export under that path, or remove `experiments.baseUrl` before deploying at a domain root. CI produces a downloadable web-preview artifact; Pages hosting is not automatically enabled.
+`app.json` sets `/fitness-hub` as the web base path. Serve the web export under that path, or remove `experiments.baseUrl` before deploying at a domain root. CI also produces a downloadable web-preview artifact. GitHub Pages should serve the `main` branch at `/ (root)`; the `.nojekyll` file ensures `_expo` assets are served.
 
 ## Included
 

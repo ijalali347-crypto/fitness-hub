@@ -1,0 +1,9 @@
+export const freshData = () => ({version:1,lang:'en',profile:{name:'',goal:'activeGoal',level:'beginner'},sessions:[],weights:[]});
+const validDate = v => typeof v === 'string' && Number.isFinite(Date.parse(v));
+export function validData(d) {
+ return !!d && d.version===1 && ['en','ar','ur','hi','es','ru','fr'].includes(d.lang) && typeof d.profile?.name==='string' && d.profile.name.length<=80 && ['weightGoal','muscleGoal','activeGoal'].includes(d.profile.goal) && ['beginner','intermediate'].includes(d.profile.level) && Array.isArray(d.sessions) && d.sessions.length<=10000 && d.sessions.every(s=>typeof s.id==='string'&&typeof s.planId==='string'&&validDate(s.date)&&Number.isFinite(s.seconds)&&s.seconds>=0&&s.seconds<=86400) && Array.isArray(d.weights) && d.weights.length<=10000 && d.weights.every(w=>typeof w.id==='string'&&validDate(w.date)&&Number.isFinite(w.kg)&&w.kg>=20&&w.kg<=500);
+}
+export function parseWeight(input) { const n=Number(String(input).trim().replace(',','.').replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c)).replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).replace('٫','.')); return n>=20&&n<=500&&Number.isFinite(n)?Math.round(n*10)/10:null; }
+export function weekSessions(sessions,now=new Date()) { const start=new Date(now);start.setHours(0,0,0,0);start.setDate(start.getDate()-((start.getDay()+6)%7));return sessions.filter(s=>Date.parse(s.date)>=+start && Date.parse(s.date)<=+now).length; }
+export function stepAfterSet(exerciseIndex,setIndex,exerciseCount,sets) {return setIndex<sets?{exerciseIndex,setIndex:setIndex+1}:exerciseIndex+1<exerciseCount?{exerciseIndex:exerciseIndex+1,setIndex:1}:null;}
+export function createSession(planId,seconds,now=new Date()) {return {id:`${+now}-${Math.random().toString(36).slice(2,8)}`,planId,seconds:Math.max(0,Math.round(seconds)),date:now.toISOString()};}

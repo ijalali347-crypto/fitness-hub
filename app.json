@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name":"Fitness Hub", "slug":"fitness-hub", "version":"1.0.0", "orientation":"portrait", "userInterfaceStyle":"dark",
+    "ios":{"supportsTablet":true,"bundleIdentifier":"com.jalalitech.fitnesshub","infoPlist":{"ITSAppUsesNonExemptEncryption":false}},
+    "android":{"package":"com.jalalitech.fitnesshub"},
+    "web":{"bundler":"metro","output":"single"},
+    "plugins":[], "experiments":{"baseUrl":"/fitness-hub"}
+  }
+}

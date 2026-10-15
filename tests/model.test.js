@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {freshData,validData,parseWeight,stepAfterSet,weekSessions} from '../src/model.js';
+import {translations,languages} from '../src/i18n.js';
+import {plans,exercises} from '../src/data.js';
+test('all screens and exercise instructions exist in all seven languages',()=>{for(const [l] of languages){assert.deepEqual(Object.keys(translations[l]),Object.keys(translations.en));for(const value of Object.values(translations[l])) assert.ok(value.length);for(const p of plans) assert.ok(p.title[l]);for(const e of Object.values(exercises)) {assert.ok(e.name[l]);assert.ok(e.guide[l]);}}});
+test('localized weight input and limits',()=>{for(const x of ['72.5','72,5','٧٢٫٥','۷۲.۵']) assert.equal(parseWeight(x),72.5); for(const x of ['',0,'NaN',501,-5]) assert.equal(parseWeight(x),null);});
+test('sets advance without recording partial sessions',()=>{assert.deepEqual(stepAfterSet(0,1,2,2),{exerciseIndex:0,setIndex:2});assert.deepEqual(stepAfterSet(0,2,2,2),{exerciseIndex:1,setIndex:1});assert.equal(stepAfterSet(1,2,2,2),null);});
+test('backups reject malformed or out of range data',()=>{const d=freshData();assert.ok(validData(JSON.parse(JSON.stringify(d))));assert.equal(validData({...d,lang:'xx'}),false);assert.equal(validData({...d,weights:[{id:'1',date:'bad',kg:70}]}),false);assert.equal(validData({...d,profile:{...d.profile,goal:'anything'}}),false);});
+test('weekly total uses local Monday and excludes future entries',()=>{const now=new Date(2026,9,16,12);const ss=[new Date(2026,9,12,8),new Date(2026,9,11,8),new Date(2026,9,17,8)].map(date=>({date:date.toISOString()}));assert.equal(weekSessions(ss,now),1);});

@@ -33,6 +33,7 @@ npx expo export --platform android --platform ios
 - Guided workout runner: complete each set, take a timed rest, pause/resume, and record only fully completed sessions. Timed movements must reach their countdown before completion. Sessions pause when the app goes into the background; they do not count hidden time.
 - Weight input supports decimal commas and Arabic/Urdu numerals. Recent weight trend, weight history and workout history use real records, not sample data. Monday-based weekly totals.
 - AsyncStorage persistence with validation, visible save failures, JSON export/restore and local deletion. Backup restore replaces current data after confirmation. Backup import accepts only the app schema.
+- Original animated male and female vector mannequins for every exercise, inside routine details and the active workout. Movement-specific wall, bench, dumbbells and mat; pause/play, slow motion, reduced-motion support and background suspension. Animations are illustrated guides, not motion capture or clinical form analysis.
 - No subscriptions, ads, analytics or tracking SDKs. All included features are free.
 
 ## Important current limits
@@ -62,6 +63,8 @@ See [Expo documentation](https://docs.expo.dev/versions/v55.0.0/) for this SDK a
 - `src/i18n.js`: complete seven-language UI strings.
 - `src/data.js`: original exercise instructions and starter routines.
 - `src/model.js`: weight parsing, backup validation, set sequencing, progress calculations.
+- `src/movement.js`: original pose interpolation and male/female SVG mannequins.
+- `src/ExerciseDemo.js`: accessible motion controls and lifecycle management.
 - `tests/model.test.js`: language coverage, backup validation, input and workout/progress logic.
 - `.github/workflows/check.yml`: tests and native/web JavaScript bundle validation.
 
